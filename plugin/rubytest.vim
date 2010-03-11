@@ -64,7 +64,7 @@ function s:RunTest()
   end
 
   let case = s:FindCase(s:test_case_patterns['test'])
-  if case != 'false'
+  if s:test_scope == 2 || case != 'false'
     let case = substitute(case, "'\\|\"", '.', 'g')
     let cmd = substitute(cmd, '%c', case, '')
     if @% =~ '^test'
@@ -91,7 +91,7 @@ function s:RunSpec()
   endif
 
   let case = s:FindCase(s:test_case_patterns['spec'])
-  if case != 'false'
+  if s:test_scope == 2 || case != 'false'
     let cmd = substitute(cmd, '%c', case, '')
     let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
     if g:rubytest_in_quickfix > 0
@@ -121,7 +121,7 @@ function s:RunFeature()
   endif
 
   let case = s:FindCase(s:test_case_patterns['feature'])
-  if case != 'false'
+  if s:test_scope == 2 || case != 'false'
     let cmd = substitute(cmd, '%c', case, '')
     let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
     if g:rubytest_in_quickfix > 0
