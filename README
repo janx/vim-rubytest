@@ -31,6 +31,8 @@ You can customize the command which will be used to run the test case by setttin
   let g:rubytest_cmd_testcase = "ruby %p -n '/%c/'"
   let g:rubytest_cmd_spec = "spec -f specdoc %p"
   let g:rubytest_cmd_example = "spec -f specdoc %p -e '%c'"
+  let g:rubytest_cmd_feature = "cucumber %p"
+  let g:rubytest_cmd_story = "cucumber %p -n '%c'"
 
 (%p will be replaced by the path of test file, %c will be replaced by the name of test case under cursor)
 
