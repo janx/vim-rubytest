@@ -105,8 +105,8 @@ function s:RunSpec()
 endfunction
 
 let s:test_patterns = {}
-let s:test_patterns['_test.rb$'] = function('s:RunTest')
-let s:test_patterns['_spec.rb$'] = function('s:RunSpec')
+let s:test_patterns['test'] = function('s:RunTest')
+let s:test_patterns['spec'] = function('s:RunSpec')
 
 function s:GetTestCaseName1(str)
   return split(a:str)[1]
