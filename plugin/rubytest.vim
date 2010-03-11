@@ -172,7 +172,7 @@ function s:GetSpecLine(str)
 endfunction
 
 function s:GetStoryLine(str)
-  return split(a:str, "Scenario: ")[1]
+  return join(split(split(a:str, "Scenario:")[1]))
 endfunction
 
 let s:test_case_patterns = {}
