@@ -9,7 +9,7 @@ endif
 let rubytest_loaded = 1
 
 if !exists("g:rubytest_in_quickfix")
-  let g:rubytest_in_quickfix = 1
+  let g:rubytest_in_quickfix = 0
 endif
 if !exists("g:rubytest_spec_drb")
   let g:rubytest_spec_drb = 0
