@@ -15,10 +15,10 @@ if !exists("g:rubytest_spec_drb")
   let g:rubytest_spec_drb = 0
 endif
 if !exists("g:rubytest_cmd_test")
-  let g:rubytest_cmd_test = "ruby %p"
+  let g:rubytest_cmd_test = "ruby -Itest -rtest_helper %p"
 endif
 if !exists("g:rubytest_cmd_testcase")
-  let g:rubytest_cmd_testcase = "ruby %p -n '/%c/'"
+  let g:rubytest_cmd_testcase = "ruby -Itest -rtest_helper %p -n '/%c/'"
 endif
 if !exists("g:rubytest_cmd_spec")
   let g:rubytest_cmd_spec = "spec -f specdoc %p"
@@ -67,13 +67,19 @@ function s:RunTest()
   if s:test_scope == 2 || case != 'false'
     let case = substitute(case, "'\\|\"", '.', 'g')
     let cmd = substitute(cmd, '%c', case, '')
-    if @% =~ '^test'
-      let cmd = substitute(cmd, '%p', s:EscapeBackSlash(strpart(@%,5)), '')
-      exe "!echo '" . cmd . "' && cd test && " . cmd
+    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
+
+    if g:rubytest_in_quickfix > 0
+      let s:oldefm = &efm
+      let &efm = s:efm . s:efm_backtrace . ',' . s:efm_ruby . ',' . s:oldefm . ',%-G%.%#'
+
+      cex system(cmd)
+      cw
+
+      let &efm = s:oldefm
     else
-      let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
       exe "!echo '" . cmd . "' && " . cmd
-    end
+    endif
   else
     echo 'No test case found.'
   endif
@@ -270,10 +276,13 @@ let s:efm=s:efm
       \.'%f:%l:\ %#%m,'
 
 let s:efm_backtrace='%D(in\ %f),'
-      \.'%\\s%#from\ %f:%l:%m,'
-      \.'%\\s#{RAILS_ROOT}/%f:%l:\ %#%m,'
-      \.'%\\s%#[%f:%l:\ %#%m,'
-      \.'%\\s%#%f:%l:\ %#%m'
+    \.'%\\s%#from\ %f:%l:%m,'
+    \.'%\\s%#from\ %f:%l:,'
+    \.'%\\s#{RAILS_ROOT}/%f:%l:\ %#%m,'
+    \.'%\\s%#[%f:%l:\ %#%m,'
+    \.'%\\s%#%f:%l:\ %#%m,'
+    \.'%\\s%#%f:%l:,'
+    \.'%m\ [%f:%l]:'
 
 let s:efm_ruby='\%-E-e:%.%#,\%+E%f:%l:\ parse\ error,%W%f:%l:\ warning:\ %m,%E%f:%l:in\ %*[^:]:\ %m,%E%f:%l:\ %m,%-C%\tfrom\ %f:%l:in\ %.%#,%-Z%\tfrom\ %f:%l,%-Z%p^'
 
