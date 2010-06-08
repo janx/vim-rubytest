@@ -15,10 +15,10 @@ if !exists("g:rubytest_spec_drb")
   let g:rubytest_spec_drb = 0
 endif
 if !exists("g:rubytest_cmd_test")
-  let g:rubytest_cmd_test = "ruby -Itest -rtest_helper %p"
+  let g:rubytest_cmd_test = "ruby %p"
 endif
 if !exists("g:rubytest_cmd_testcase")
-  let g:rubytest_cmd_testcase = "ruby -Itest -rtest_helper %p -n '/%c/'"
+  let g:rubytest_cmd_testcase = "ruby %p -n '/%c/'"
 endif
 if !exists("g:rubytest_cmd_spec")
   let g:rubytest_cmd_spec = "spec -f specdoc %p"
@@ -68,6 +68,10 @@ function s:RunTest()
     let case = substitute(case, "'\\|\"", '.', 'g')
     let cmd = substitute(cmd, '%c', case, '')
     let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
+
+    if @% =~ '^test'
+      let cmd = substitute(cmd, '^ruby ', 'ruby -Itest -rtest_helper ', '')
+    endif
 
     if g:rubytest_in_quickfix > 0
       let s:oldefm = &efm
