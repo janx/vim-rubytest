@@ -41,9 +41,11 @@ Default Key Bindings
 
 <Leader>t: run test case under cursor
 <Leader>T: run all tests in file
+<Leader>l: run the last test, from any buffer
 
 You can change default key bindings:
 
   map <Leader>\ <Plug>RubyTestRun " change from <Leader>t to <Leader>\
   map <Leader>] <Plug>RubyFileRun " change from <Leader>T to <Leader>]
+  map <Leader>/ <Plug>RubyFileRun " change from <Leader>l to <Leader>/
 

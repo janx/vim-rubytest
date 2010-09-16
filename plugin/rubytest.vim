@@ -51,9 +51,24 @@ function s:FindCase(patterns)
   return 'false'
 endfunction
 
-
 function s:EscapeBackSlash(str)
-  return substitute(a:str, '\', '\\\\', 'g') 
+  return substitute(a:str, '\', '\\\\', 'g')
+endfunction
+
+function s:ExecTest(cmd)
+  let g:rubytest_last_cmd = a:cmd
+
+  if g:rubytest_in_quickfix > 0
+    let s:oldefm = &efm
+    let &efm = s:efm . s:efm_backtrace . ',' . s:efm_ruby . ',' . s:oldefm . ',%-G%.%#'
+
+    cex system(a:cmd)
+    cw
+
+    let &efm = s:oldefm
+  else
+    exe "!echo '" . a:cmd . "' && " . a:cmd
+  endif
 endfunction
 
 function s:RunTest()
@@ -73,17 +88,7 @@ function s:RunTest()
       let cmd = substitute(cmd, '^ruby ', 'ruby -Itest -rtest_helper ', '')
     endif
 
-    if g:rubytest_in_quickfix > 0
-      let s:oldefm = &efm
-      let &efm = s:efm . s:efm_backtrace . ',' . s:efm_ruby . ',' . s:oldefm . ',%-G%.%#'
-
-      cex system(cmd)
-      cw
-
-      let &efm = s:oldefm
-    else
-      exe "!echo '" . cmd . "' && " . cmd
-    endif
+    call s:ExecTest(cmd)
   else
     echo 'No test case found.'
   endif
@@ -199,6 +204,9 @@ endif
 if !hasmapto('<Plug>RubyFileRun')
   map <unique> <Leader>T <Plug>RubyFileRun
 endif
+if !hasmapto('<Plug>RubyTestRunLast')
+  map <unique> <Leader>l <Plug>RubyTestRunLast
+endif
 
 function s:IsRubyTest()
   for pattern in keys(s:test_patterns)
@@ -221,10 +229,20 @@ function s:Run(scope)
   endif
 endfunction
 
+function s:RunLast()
+  if !exists("g:rubytest_last_cmd")
+    echo "No previous test has been run"
+  else
+    let r = s:ExecTest(g:rubytest_last_cmd)
+  end
+endfunction
+
 noremap <unique> <script> <Plug>RubyTestRun <SID>Run
 noremap <unique> <script> <Plug>RubyFileRun <SID>RunFile
+noremap <unique> <script> <Plug>RubyTestRunLast <SID>RunLast
 noremap <SID>Run :call <SID>Run(1)<CR>
 noremap <SID>RunFile :call <SID>Run(2)<CR>
+noremap <SID>RunLast :call <SID>RunLast()<CR>
 
 let s:efm='%A%\\d%\\+)%.%#,'
 
