@@ -49,3 +49,9 @@ You can change default key bindings:
   map <Leader>] <Plug>RubyFileRun     " change from <Leader>T to <Leader>]
   map <Leader>/ <Plug>RubyTestRunLast " change from <Leader>l to <Leader>/
 
+Contributors
+------------
+
+* Bogdan Gusiev
+* Yung Hwa Kwon (nowk)
+* J. Weir 
