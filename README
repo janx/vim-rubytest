@@ -45,7 +45,7 @@ Default Key Bindings
 
 You can change default key bindings:
 
-  map <Leader>\ <Plug>RubyTestRun " change from <Leader>t to <Leader>\
-  map <Leader>] <Plug>RubyFileRun " change from <Leader>T to <Leader>]
-  map <Leader>/ <Plug>RubyFileRun " change from <Leader>l to <Leader>/
+  map <Leader>\ <Plug>RubyTestRun     " change from <Leader>t to <Leader>\
+  map <Leader>] <Plug>RubyFileRun     " change from <Leader>T to <Leader>]
+  map <Leader>/ <Plug>RubyTestRunLast " change from <Leader>l to <Leader>/
 
