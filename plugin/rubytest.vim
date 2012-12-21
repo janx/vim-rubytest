@@ -167,13 +167,13 @@ function s:GetSpecLine(str)
 endfunction
 
 function s:GetStoryLine(str)
-  return join(split(split(a:str, "Scenario:")[1]))
+  return join(split(split(a:str, 'Scenario\( Outline\)\?:')[1]))
 endfunction
 
 let s:test_case_patterns = {}
 let s:test_case_patterns['test'] = {'^\s*def test':function('s:GetTestCaseName1'), '^\s*test \s*"':function('s:GetTestCaseName2'), "^\\s*test \\s*'":function('s:GetTestCaseName4'), '^\s*should \s*"':function('s:GetTestCaseName3'), "^\\s*should \\s*'":function('s:GetTestCaseName5')}
 let s:test_case_patterns['spec'] = {'^\s*\(it\|example\|describe\|context\) \s*':function('s:GetSpecLine')}
-let s:test_case_patterns['feature'] = {'^\s*Scenario:':function('s:GetStoryLine')}
+let s:test_case_patterns['feature'] = {'^\s*Scenario\( Outline\)\?:':function('s:GetStoryLine')}
 
 let s:save_cpo = &cpo
 set cpo&vim
