@@ -79,6 +79,7 @@ function s:RunTest()
   end
 
   let case = s:FindCase(s:test_case_patterns['test'])
+  let spec_case = s:FindCase(s:test_case_patterns['spec'])
   if s:test_scope == 2 || case != 'false'
     let case = substitute(case, "'\\|\"", '.', 'g')
     let cmd = substitute(cmd, '%c', case, '')
@@ -87,6 +88,15 @@ function s:RunTest()
     if @% =~ '^test'
       let cmd = substitute(cmd, '^ruby ', 'ruby -Itest -rtest_helper ', '')
     endif
+
+    call s:ExecTest(cmd)
+  elseif spec_case != 'false'
+    let name = matchstr( spec_case, '\v%("([^"]*)"|''([^'']*)'')' )
+    let name = substitute(name, '\s\+', '\.', 'g')
+    let name = substitute(name, '^["|'']*\(.\{-}\)["|'']$', '\1', '')
+    let spec_case = substitute(spec_case, '.*', name, '')
+    let cmd = substitute(cmd, '%c', spec_case, '')
+    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
 
     call s:ExecTest(cmd)
   else
