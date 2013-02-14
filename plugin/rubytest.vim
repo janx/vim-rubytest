@@ -86,7 +86,7 @@ function s:RunTest()
     let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
 
     if @% =~ '^test'
-      let cmd = substitute(cmd, '^ruby ', 'ruby -Itest -rtest_helper ', '')
+      let cmd = substitute(cmd, '^ruby ', 'ruby -Itest ', '')
     endif
 
     call s:ExecTest(cmd)
@@ -97,6 +97,10 @@ function s:RunTest()
     let spec_case = substitute(spec_case, '.*', name, '')
     let cmd = substitute(cmd, '%c', spec_case, '')
     let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
+
+    if @% =~ '^test'
+      let cmd = substitute(cmd, '^ruby ', 'ruby -Itest ', '')
+    endif
 
     call s:ExecTest(cmd)
   else
