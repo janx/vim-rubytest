@@ -82,8 +82,8 @@ function s:RunTest()
   let spec_case = s:FindCase(s:test_case_patterns['spec'])
   if s:test_scope == 2 || case != 'false'
     let case = substitute(case, "\#\\|'\\|\"", '.', 'g')
-    let cmd = substitute(cmd, '%c', case, '')
-    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
+    let cmd = substitute(cmd, '%c', case, 'g')
+    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), 'g')
 
     if @% =~ '^test'
       let cmd = substitute(cmd, '^ruby ', 'ruby -Itest ', '')
@@ -95,8 +95,8 @@ function s:RunTest()
     let name = substitute(name, '\s\+', '\.', 'g')
     let name = substitute(name, '^["|'']*\(.\{-}\)["|'']$', '\1', '')
     let spec_case = substitute(spec_case, '.*', name, '')
-    let cmd = substitute(cmd, '%c', spec_case, '')
-    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
+    let cmd = substitute(cmd, '%c', spec_case, 'g')
+    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), 'g')
 
     if @% =~ '^test'
       let cmd = substitute(cmd, '^ruby ', 'ruby -Itest ', '')
@@ -121,8 +121,8 @@ function s:RunSpec()
 
   let case = s:FindCase(s:test_case_patterns['spec'])
   if s:test_scope == 2 || case != 'false'
-    let cmd = substitute(cmd, '%c', case, '')
-    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
+    let cmd = substitute(cmd, '%c', case, 'g')
+    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), 'g')
     call s:ExecTest(cmd)
   else
     echo 'No spec found.'
@@ -141,8 +141,8 @@ function s:RunFeature()
 
   let case = s:FindCase(s:test_case_patterns['feature'])
   if s:test_scope == 2 || case != 'false'
-    let cmd = substitute(cmd, '%c', case, '')
-    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), '')
+    let cmd = substitute(cmd, '%c', case, 'g')
+    let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), 'g')
     call s:ExecTest(cmd)
   else
     echo 'No story found.'
