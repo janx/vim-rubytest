@@ -18,7 +18,7 @@ if !exists("g:rubytest_cmd_test")
   let g:rubytest_cmd_test = "ruby %p"
 endif
 if !exists("g:rubytest_cmd_testcase")
-  let g:rubytest_cmd_testcase = "ruby %p -n '/%c/'"
+  let g:rubytest_cmd_testcase = "ruby %p -n '%c'"
 endif
 if !exists("g:rubytest_cmd_spec")
   let g:rubytest_cmd_spec = "rspec %p"
