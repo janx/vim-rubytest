@@ -1,5 +1,5 @@
 " Vim plugin for running ruby tests
-" Last Change: Jun 17 2011
+" Last Change: Mar 21, 2013
 " Maintainer: Jan <jan.h.xie@gmail.com>
 " License: MIT License
 
