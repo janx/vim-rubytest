@@ -36,7 +36,13 @@ You can customize the command which will be used to run the test case by setttin
   let g:rubytest_cmd_feature = "cucumber %p"
   let g:rubytest_cmd_story = "cucumber %p -n '%c'"
 
-(%p will be replaced by the path of test file, %c will be replaced by the name of test case under cursor)
+Placeholders:
+
+* `%p`: path of test file
+* `%c`: test case name
+* `%s`: only for minitest, replaced by closest suite name (class whose name begin with 'Test'). This can be used to match test case more exactly:
+
+  let g:rubytest_cmd_testcase = "ruby %p -n '%s#%c'"
 
 Default Key Bindings
 --------------------

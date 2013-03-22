@@ -80,10 +80,12 @@ function s:RunTest()
   end
 
   let case = s:FindCase(s:test_case_patterns['test'])
+  let suite = s:FindCase(s:test_case_patterns['test_suite'])
   let spec_case = s:FindCase(s:test_case_patterns['spec'])
   if s:test_scope == 2 || case != 'false'
-    let case = substitute(case, "\#\\|'\\|\"", '.', 'g')
+    let case = substitute(case, "'\\|\"", '.', 'g')
     let cmd = substitute(cmd, '%c', case, 'g')
+    let cmd = substitute(cmd, '%s', suite, 'g')
     let cmd = substitute(cmd, '%p', s:EscapeBackSlash(@%), 'g')
 
     if @% =~ '^test'
@@ -177,6 +179,10 @@ function s:GetTestCaseName5(str)
   return split(a:str, "'")[1]
 endfunction
 
+function s:GetTestSuiteName(str)
+  return split(a:str)[1]
+endfunction
+
 function s:GetSpecLine(str)
   return a:str
 endfunction
@@ -187,6 +193,7 @@ endfunction
 
 let s:test_case_patterns = {}
 let s:test_case_patterns['test'] = {'^\s*def test':function('s:GetTestCaseName1'), '^\s*test \s*"':function('s:GetTestCaseName2'), "^\\s*test \\s*'":function('s:GetTestCaseName4'), '^\s*should \s*"':function('s:GetTestCaseName3'), "^\\s*should \\s*'":function('s:GetTestCaseName5')}
+let s:test_case_patterns['test_suite'] = {'^\s*class Test':function('s:GetTestSuiteName')}
 let s:test_case_patterns['spec'] = {'^\s*\(it\|example\|scenario\|describe\|context\|feature\) \s*':function('s:GetSpecLine')}
 let s:test_case_patterns['feature'] = {'^\s*Scenario\( Outline\)\?:':function('s:GetStoryLine')}
 
