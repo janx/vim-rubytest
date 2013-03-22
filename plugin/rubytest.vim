@@ -58,16 +58,17 @@ endfunction
 function s:ExecTest(cmd)
   let g:rubytest_last_cmd = a:cmd
 
+  let cmd = substitute(a:cmd, '#', '\\#', 'g')
   if g:rubytest_in_quickfix > 0
     let s:oldefm = &efm
     let &efm = s:efm . s:efm_backtrace . ',' . s:efm_ruby . ',' . s:oldefm . ',%-G%.%#'
 
-    cex system(a:cmd)
+    cex system(cmd)
     cw
 
     let &efm = s:oldefm
   else
-    exe "!echo '" . a:cmd . "' && " . a:cmd
+    exe "!echo '" . cmd . "' && " . cmd
   endif
 endfunction
 
