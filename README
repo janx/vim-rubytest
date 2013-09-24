@@ -27,7 +27,7 @@ Be default, the plugin will print output in terminal. You can change this behavi
 
 With this set, test errors will be displayed in quickfix window, and you can jump to the error location quickly by select the error message and hit return (or 'Ctrl-w return' to open it in new window).
 
-You can customize the command which will be used to run the test case by settting these options in your vimrc file:
+You can customize the command which will be used to run the test case by setting these options in your vimrc file:
 
   let g:rubytest_cmd_test = "ruby %p"
   let g:rubytest_cmd_testcase = "ruby %p -n '/%c/'"
