@@ -57,6 +57,11 @@ You can change default key bindings:
   map <Leader>] <Plug>RubyFileRun     " change from <Leader>T to <Leader>]
   map <Leader>/ <Plug>RubyTestRunLast " change from <Leader>l to <Leader>/
 
+Tip
+---
+
+* Rubytest.vim works perfectly with vim-localvimrc, which enables you to set different test run command for different projects. Check details at: https://github.com/embear/vim-localvimrc
+
 Contributors
 ------------
 
