@@ -48,6 +48,13 @@ You can customize the command which will be used to run the test case by setting
     let g:rubytest_cmd_test = "bundle exec spring testunit %p"
     let g:rubytest_cmd_testcase = "bundle exec spring testunit %p -n '/%c/'"
 
+### Using [Zeus](https://github.com/burke/zeus)
+
+Note that Zeus is not typically run from within the project's bundle context, so `bundle exec` is omitted from example
+
+    let g:rubytest_cmd_test = "zeus test %p"
+    let g:rubytest_cmd_testcase = "zeus test %p -n '/%c/'"
+
 Placeholders:
 
 * `%p`: path of test file
