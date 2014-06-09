@@ -193,7 +193,7 @@ endfunction
 
 let s:test_case_patterns = {}
 let s:test_case_patterns['test'] = {'^\s*def test':function('s:GetTestCaseName1'), '^\s*test \s*"':function('s:GetTestCaseName2'), "^\\s*test \\s*'":function('s:GetTestCaseName4'), '^\s*should \s*"':function('s:GetTestCaseName3'), "^\\s*should \\s*'":function('s:GetTestCaseName5')}
-let s:test_case_patterns['test_suite'] = {'^\s*class Test':function('s:GetTestSuiteName')}
+let s:test_case_patterns['test_suite'] = {'^\s*class Test\|\(\w\+Test\>\)':function('s:GetTestSuiteName')}
 let s:test_case_patterns['spec'] = {'^\s*\(it\|example\|scenario\|describe\|context\|feature\) \s*':function('s:GetSpecLine')}
 let s:test_case_patterns['feature'] = {'^\s*Scenario\( Outline\)\?:':function('s:GetStoryLine')}
 
