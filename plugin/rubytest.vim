@@ -60,6 +60,7 @@ function s:ExecTest(cmd)
 
   let cmd = substitute(a:cmd, '#', '\\#', 'g')
   if g:rubytest_in_quickfix > 0
+    echo "Running... " . cmd
     let s:oldefm = &efm
     let &efm = s:efm . s:efm_backtrace . ',' . s:efm_ruby . ',' . s:oldefm . ',%-G%.%#'
 
