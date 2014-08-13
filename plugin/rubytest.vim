@@ -66,7 +66,7 @@ function s:ExecTest(cmd)
 
     cex system(cmd)
     redraw!
-    copen
+    botright copen
 
     let &efm = s:oldefm
   else
