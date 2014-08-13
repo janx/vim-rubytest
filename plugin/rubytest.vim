@@ -65,7 +65,8 @@ function s:ExecTest(cmd)
     let &efm = s:efm . s:efm_backtrace . ',' . s:efm_ruby . ',' . s:oldefm . ',%-G%.%#'
 
     cex system(cmd)
-    cw
+    redraw!
+    copen
 
     let &efm = s:oldefm
   else
