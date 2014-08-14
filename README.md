@@ -90,3 +90,4 @@ Contributors
 * Ben Simpson (bsimpson)
 * Alexander Belyaev (alexbel)
 * Ivan Tkalin (ivalkeen)
+* Dejan Simić (dejan)
