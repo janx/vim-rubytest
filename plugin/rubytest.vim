@@ -208,8 +208,8 @@ endif
 if !hasmapto('<Plug>RubyFileRun')
   map <unique> <Leader>T <Plug>RubyFileRun
 endif
-if !hasmapto('<Plug>RubyTestRunLast')
-  map <unique> <Leader>l <Plug>RubyTestRunLast
+if !hasmapto('<Plug>RubyLastRun')
+  map <unique> <Leader>l <Plug>RubyLastRun
 endif
 
 function s:IsRubyTest()
@@ -241,10 +241,10 @@ function s:RunLast()
   end
 endfunction
 
-noremap <unique> <script> <Plug>RubyTestRun <SID>Run
+noremap <unique> <script> <Plug>RubyTestRun <SID>RunTest
 noremap <unique> <script> <Plug>RubyFileRun <SID>RunFile
-noremap <unique> <script> <Plug>RubyTestRunLast <SID>RunLast
-noremap <SID>Run :call <SID>Run(1)<CR>
+noremap <unique> <script> <Plug>RubyLastRun <SID>RunLast
+noremap <SID>RunTest :call <SID>Run(1)<CR>
 noremap <SID>RunFile :call <SID>Run(2)<CR>
 noremap <SID>RunLast :call <SID>RunLast()<CR>
 
