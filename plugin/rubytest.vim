@@ -21,10 +21,10 @@ if !exists("g:rubytest_cmd_testcase")
   let g:rubytest_cmd_testcase = "ruby '%p' -n '%c'"
 endif
 if !exists("g:rubytest_cmd_spec")
-  let g:rubytest_cmd_spec = "rspec '%p'"
+  let g:rubytest_cmd_spec = "rspec %p"
 endif
 if !exists("g:rubytest_cmd_example")
-  let g:rubytest_cmd_example = "rspec '%p' -l '%c'"
+  let g:rubytest_cmd_example = "rspec %p:%c"
 endif
 if !exists("g:rubytest_cmd_feature")
   let g:rubytest_cmd_feature = "cucumber '%p'"
