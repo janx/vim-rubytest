@@ -170,7 +170,7 @@ function s:GetTestCaseName2(str)
 endfunction
 
 function s:GetTestCaseName3(str)
-  return split(a:str, '"')[1]
+  return '/' . split(a:str, '"')[1] . '/'
 endfunction
 
 function s:GetTestCaseName4(str)
@@ -178,7 +178,7 @@ function s:GetTestCaseName4(str)
 endfunction
 
 function s:GetTestCaseName5(str)
-  return split(a:str, "'")[1]
+  return '/' . split(a:str, "'")[1] . '/'
 endfunction
 
 function s:GetTestSuiteName(str)
