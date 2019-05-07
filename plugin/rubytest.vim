@@ -11,6 +11,12 @@ let rubytest_loaded = 1
 if !exists("g:rubytest_in_quickfix")
   let g:rubytest_in_quickfix = 0
 endif
+
+if !exists("g:rubytest_output")
+  let g:rubytest_output = "terminal"
+endif
+
+
 if !exists("g:rubytest_spec_drb")
   let g:rubytest_spec_drb = 0
 endif
@@ -59,7 +65,7 @@ function s:ExecTest(cmd)
   let g:rubytest_last_cmd = a:cmd
 
   let cmd = substitute(a:cmd, '#', '\\#', 'g')
-  if g:rubytest_in_quickfix > 0
+  if g:rubytest_output == "quickfix"
     echo "Running... " . cmd
     let s:oldefm = &efm
     let &efm = s:efm . s:efm_backtrace . ',' . s:efm_ruby . ',' . s:oldefm . ',%-G%.%#'
@@ -69,6 +75,13 @@ function s:ExecTest(cmd)
     botright copen
 
     let &efm = s:oldefm
+  elseif g:rubytest_output == "vim_terminal"
+    " exe "terminal " . shellescape(cmd
+
+    let cmd = substitute(cmd, "'", '"', 'g')
+    echo "Running... " . cmd
+    exe "terminal " . cmd
+
   else
     exe "!echo '" . cmd . "' && " . cmd
   endif
