@@ -8,12 +8,13 @@ if exists("rubytest_loaded")
 endif
 let rubytest_loaded = 1
 
-if !exists("g:rubytest_in_quickfix")
-  let g:rubytest_in_quickfix = 0
+" This option is legacy
+if exists("g:rubytest_in_quickfix")
+  let g:rubytest_output = "quickfix"
 endif
 
 if !exists("g:rubytest_output")
-  let g:rubytest_output = "terminal"
+  let g:rubytest_output = "quickfix"
 endif
 
 
@@ -148,8 +149,11 @@ function s:RunSpec()
 endfunction
 
 function s:RunFeature()
-  let s:old_in_quickfix = g:rubytest_in_quickfix
-  let g:rubytest_in_quickfix = 0
+  let s:old_rubytest_output = g:rubytest_output
+  " let g:rubytest_in_quickfix = 0
+  if g:rubytest_output == 'quickfix'
+    let g:rubytest_output = 'terminal'
+  endif
 
   if s:test_scope == 1
     let cmd = g:rubytest_cmd_story
@@ -166,7 +170,7 @@ function s:RunFeature()
     echo 'No story found.'
   endif
 
-  let g:rubytest_in_quickfix = s:old_in_quickfix
+  let g:rubytest_output = s:old_rubytest_output
 endfunction
 
 let s:test_patterns = {}
