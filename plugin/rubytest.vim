@@ -8,9 +8,16 @@ if exists("rubytest_loaded")
 endif
 let rubytest_loaded = 1
 
-if !exists("g:rubytest_in_quickfix")
-  let g:rubytest_in_quickfix = 0
+" This option is legacy
+if exists("g:rubytest_in_quickfix")
+  let g:rubytest_output = "quickfix"
 endif
+
+if !exists("g:rubytest_output")
+  let g:rubytest_output = "quickfix"
+endif
+
+
 if !exists("g:rubytest_spec_drb")
   let g:rubytest_spec_drb = 0
 endif
@@ -59,7 +66,7 @@ function s:ExecTest(cmd)
   let g:rubytest_last_cmd = a:cmd
 
   let cmd = substitute(a:cmd, '#', '\\#', 'g')
-  if g:rubytest_in_quickfix > 0
+  if g:rubytest_output == "quickfix"
     echo "Running... " . cmd
     let s:oldefm = &efm
     let &efm = s:efm . s:efm_backtrace . ',' . s:efm_ruby . ',' . s:oldefm . ',%-G%.%#'
@@ -69,6 +76,13 @@ function s:ExecTest(cmd)
     botright copen
 
     let &efm = s:oldefm
+  elseif g:rubytest_output == "vim_terminal"
+    " exe "terminal " . shellescape(cmd
+
+    let cmd = substitute(cmd, "'", '"', 'g')
+    echo "Running... " . cmd
+    exe "terminal " . cmd
+
   else
     exe "!echo '" . cmd . "' && " . cmd
   endif
@@ -135,8 +149,11 @@ function s:RunSpec()
 endfunction
 
 function s:RunFeature()
-  let s:old_in_quickfix = g:rubytest_in_quickfix
-  let g:rubytest_in_quickfix = 0
+  let s:old_rubytest_output = g:rubytest_output
+  " let g:rubytest_in_quickfix = 0
+  if g:rubytest_output == 'quickfix'
+    let g:rubytest_output = 'terminal'
+  endif
 
   if s:test_scope == 1
     let cmd = g:rubytest_cmd_story
@@ -153,7 +170,7 @@ function s:RunFeature()
     echo 'No story found.'
   endif
 
-  let g:rubytest_in_quickfix = s:old_in_quickfix
+  let g:rubytest_output = s:old_rubytest_output
 endfunction
 
 let s:test_patterns = {}
@@ -194,7 +211,7 @@ function s:GetStoryLine(str)
 endfunction
 
 let s:test_case_patterns = {}
-let s:test_case_patterns['test'] = {'^\s*def test':function('s:GetTestCaseName1'), '^\s*test \s*"':function('s:GetTestCaseName2'), "^\\s*test \\s*'":function('s:GetTestCaseName4'), '^\s*should \s*"':function('s:GetTestCaseName3'), "^\\s*should \\s*'":function('s:GetTestCaseName5')}
+let s:test_case_patterns['test'] = {'^\s*def test':function('s:GetTestCaseName1'), '^\s*test \s*"':function('s:GetTestCaseName2'), "^\\s*test \\s*'":function('s:GetTestCaseName4'), '^\s*should \s*"':function('s:GetTestCaseName3'), "^\\s*should \\s*'":function('s:GetTestCaseName5'), "^\\s*it \\s*'":function('s:GetTestCaseName5')}
 let s:test_case_patterns['test_suite'] = {'^\s*class Test\|\(\w\+Test\>\)':function('s:GetTestSuiteName')}
 let s:test_case_patterns['spec'] = {'^\s*\(it\|specify\|example\|scenario\|describe\|context\|feature\) \s*':function('s:GetSpecLine')}
 let s:test_case_patterns['feature'] = {'^\s*Scenario\( Outline\)\?:':function('s:GetStoryLine')}

@@ -25,7 +25,12 @@ $ vim test/unit/user_test.rb
 
 Be default, the plugin will print output in terminal. You can change this behavior by putting this line in your vimrc file:
 
-    let g:rubytest_in_quickfix = 1
+    let g:rubytest_output = <output>
+
+The following `<output>` values are supported:
+
+* `quickfix` - show failed tests in a quickfix window
+* `vim_terminal` - run the tests in a vim terminal (vim version 8.1 or higher)
 
 With this set, test errors will be displayed in quickfix window, and you can jump to the error location quickly by select the error message and hit return (or `Ctrl-w return` to open it in new window).
 
